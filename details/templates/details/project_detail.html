@@ -1,0 +1,894 @@
+
+{% extends 'details/base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} - Parshwa Shah{% endblock %}
+
+{% block content %}
+<!-- Project Hero Section -->
+<section class="project-hero">
+    <div class="container">
+        <div class="project-hero-content">
+            <div class="breadcrumb">
+                <a href="{% url 'home' %}">Home</a>
+                <span>/</span>
+                <a href="{% url 'projects' %}">Projects</a>
+                <span>/</span>
+                <span>{{ project.title }}</span>
+            </div>
+            
+            <h1 class="project-title">{{ project.title }}</h1>
+            <p class="project-subtitle">{{ project.description }}</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>{{ project.start_date|date:"M Y" }} {% if project.end_date %}- {{ project.end_date|date:"M Y" }}{% else %}- Present{% endif %}</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-tag"></i>
+                    <span class="project-status status-{{ project.status }}">{{ project.get_status_display }}</span>
+                </div>
+                {% if project.featured %}
+                <div class="meta-item">
+                    <i class="fas fa-star"></i>
+                    <span>Featured Project</span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="project-actions">
+                {% if project.project_url %}
+                    <a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt"></i>
+                        Live Demo
+                    </a>
+                {% endif %}
+                {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                        <i class="fab fa-github"></i>
+                        View Code
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details Section -->
+<section class="project-details">
+    <div class="container">
+        <div class="project-content">
+            <!-- Project Image -->
+            <div class="project-image-section">
+                {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-main-image">
+                {% else %}
+                    <div class="project-placeholder-large">
+                        {% if 'ecommerce' in project.title|lower or 'shop' in project.title|lower %}
+                            <i class="fas fa-shopping-cart"></i>
+                        {% elif 'security' in project.title|lower or 'shield' in project.title|lower %}
+                            <i class="fas fa-shield-alt"></i>
+                        {% elif 'ai' in project.title|lower or 'gpt' in project.title|lower %}
+                            <i class="fas fa-brain"></i>
+                        {% else %}
+                            <i class="fas fa-code"></i>
+                        {% endif %}
+                        <h3>{{ project.title }}</h3>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Project Information -->
+            <div class="project-info">
+                <div class="info-section">
+                    <h2 class="section-title">Project Overview</h2>
+                    <div class="project-description">
+                        {% if project.detailed_description %}
+                            <p>{{ project.detailed_description|linebreaks }}</p>
+                        {% else %}
+                            <p>{{ project.description }}</p>
+                            <!-- Default detailed description based on project title -->
+                            {% if 'satvam' in project.title|lower or 'ecommerce' in project.title|lower %}
+                                <p>This comprehensive e-commerce platform was built from the ground up to serve natural product retailers. The project involved creating a complete online shopping experience with secure payment processing, inventory management, and customer account features.</p>
+                                <p>Key features include product catalog management, shopping cart functionality, secure checkout process, order tracking, and an admin dashboard for business operations. The platform was designed with scalability and security in mind.</p>
+                            {% elif 'gpt' in project.title|lower or 'shield' in project.title|lower %}
+                                <p>GPT Shield is an innovative AI-powered application designed to help users improve their writing through advanced grammar correction and plagiarism detection. The system leverages the LanguageTool API to provide real-time suggestions and corrections.</p>
+                                <p>The application features user authentication, writing history tracking, detailed grammar analysis, and plagiarism detection capabilities. Built with a focus on user experience and accuracy.</p>
+                            {% elif 'security' in project.title|lower %}
+                                <p>This cybersecurity project focuses on web application security analysis and vulnerability assessment. The tool helps identify potential security threats and provides recommendations for mitigation.</p>
+                                <p>Features include automated vulnerability scanning, detailed security reports, and integration with popular security frameworks for comprehensive analysis.</p>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h2 class="section-title">Technologies Used</h2>
+                    <div class="tech-stack">
+                        {% for tech in project.technologies|split:"," %}
+                            <span class="tech-tag">{{ tech|trim }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h2 class="section-title">Key Features</h2>
+                    <div class="features-list">
+                        {% if 'satvam' in project.title|lower or 'ecommerce' in project.title|lower %}
+                            <div class="feature-item">
+                                <i class="fas fa-shopping-cart"></i>
+                                <div>
+                                    <h4>Shopping Cart & Checkout</h4>
+                                    <p>Complete shopping experience with secure payment integration</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-boxes"></i>
+                                <div>
+                                    <h4>Product Management</h4>
+                                    <p>Comprehensive catalog with categories, inventory tracking</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-user-shield"></i>
+                                <div>
+                                    <h4>User Accounts</h4>
+                                    <p>Customer registration, profiles, order history</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div>
+                                    <h4>Responsive Design</h4>
+                                    <p>Optimized for all devices and screen sizes</p>
+                                </div>
+                            </div>
+                        {% elif 'gpt' in project.title|lower or 'shield' in project.title|lower %}
+                            <div class="feature-item">
+                                <i class="fas fa-spell-check"></i>
+                                <div>
+                                    <h4>Grammar Correction</h4>
+                                    <p>AI-powered grammar and spelling correction</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-search"></i>
+                                <div>
+                                    <h4>Plagiarism Detection</h4>
+                                    <p>Advanced plagiarism checking capabilities</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-history"></i>
+                                <div>
+                                    <h4>History Tracking</h4>
+                                    <p>Save and review previous corrections</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-user-lock"></i>
+                                <div>
+                                    <h4>User Authentication</h4>
+                                    <p>Secure user accounts and data protection</p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="feature-item">
+                                <i class="fas fa-code"></i>
+                                <div>
+                                    <h4>Modern Architecture</h4>
+                                    <p>Built with latest technologies and best practices</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <div>
+                                    <h4>Security First</h4>
+                                    <p>Implemented with security considerations from ground up</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div>
+                                    <h4>Responsive Design</h4>
+                                    <p>Optimized for all devices and platforms</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-rocket"></i>
+                                <div>
+                                    <h4>Performance Optimized</h4>
+                                    <p>Fast loading and efficient resource utilization</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h2 class="section-title">Project Challenges & Solutions</h2>
+                    <div class="challenges-list">
+                        <div class="challenge-item">
+                            <h4>Challenge: Security Implementation</h4>
+                            <p>Ensuring secure user data handling and protection against common web vulnerabilities.</p>
+                            <h4>Solution:</h4>
+                            <p>Implemented Django's built-in security features, CSRF protection, secure authentication, and regular security audits.</p>
+                        </div>
+                        <div class="challenge-item">
+                            <h4>Challenge: Performance Optimization</h4>
+                            <p>Maintaining fast loading times while handling complex functionality.</p>
+                            <h4>Solution:</h4>
+                            <p>Database query optimization, caching strategies, and efficient frontend asset management.</p>
+                        </div>
+                        <div class="challenge-item">
+                            <h4>Challenge: User Experience</h4>
+                            <p>Creating an intuitive and engaging user interface.</p>
+                            <h4>Solution:</h4>
+                            <p>User-centered design approach, responsive layouts, and extensive testing across devices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Projects Section -->
+{% if related_projects %}
+<section class="related-projects">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Related Projects</h2>
+            <p class="section-subtitle">Other projects you might find interesting</p>
+        </div>
+        
+        <div class="related-grid">
+            {% for related in related_projects %}
+            <div class="related-card">
+                <div class="related-image">
+                    {% if related.image %}
+                        <img src="{{ related.image.url }}" alt="{{ related.title }}">
+                    {% else %}
+                        <div class="related-placeholder">
+                            <i class="fas fa-code"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="related-content">
+                    <h3 class="related-title">{{ related.title }}</h3>
+                    <p class="related-description">{{ related.description|truncatewords:15 }}</p>
+                    <div class="related-tech">
+                        {% for tech in related.technologies|split:","  %}
+                            {% if forloop.counter <= 3 %}
+                                <span class="tech-tag-small">{{ tech|trim }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'project_detail' related.id %}" class="related-link">
+                        <i class="fas fa-arrow-right"></i>
+                        View Project
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Interested in Similar Work?</h2>
+            <p class="cta-description">
+                Let's discuss how I can help you build your next project with the same level of expertise and attention to detail.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i>
+                    Start a Project
+                </a>
+                <a href="{% url 'projects' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Projects
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.project-hero {
+    padding: 8rem 0 4rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white-color);
+}
+
+.breadcrumb {
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.breadcrumb a {
+    color: var(--white-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.breadcrumb a:hover {
+    opacity: 0.8;
+}
+
+.breadcrumb span {
+    margin: 0 0.5rem;
+}
+
+.project-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.project-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    max-width: 800px;
+}
+
+.project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.meta-item i {
+    font-size: 1.125rem;
+}
+
+.project-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-completed {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--white-color);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-ongoing {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--white-color);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-planned {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--white-color);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.project-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.project-details {
+    padding: 5rem 0;
+}
+
+.project-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.project-image-section {
+    position: sticky;
+    top: 100px;
+}
+
+.project-main-image {
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-heavy);
+}
+
+.project-placeholder-large {
+    background: var(--gradient-primary);
+    color: var(--white-color);
+    border-radius: 1rem;
+    padding: 4rem 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-heavy);
+}
+
+.project-placeholder-large i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.project-placeholder-large h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.info-section {
+    margin-bottom: 3rem;
+}
+
+.info-section .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.info-section .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.project-description {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 1.125rem;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.tech-tag {
+    padding: 0.5rem 1rem;
+    background: var(--light-color);
+    color: var(--primary-color);
+    border-radius: 1.5rem;
+    font-weight: 600;
+    border: 2px solid var(--primary-color);
+    transition: var(--transition);
+}
+
+.tech-tag:hover {
+    background: var(--primary-color);
+    color: var(--white-color);
+}
+
+.features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.feature-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.feature-item i {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: var(--white-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.feature-item h4 {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.feature-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.challenges-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.challenge-item {
+    background: var(--light-color);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.challenge-item h4 {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.challenge-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.challenge-item p:last-child {
+    margin-bottom: 0;
+}
+
+.related-projects {
+    padding: 5rem 0;
+    background: var(--light-color);
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.related-card {
+    background: var(--white-color);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition);
+}
+
+.related-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.related-image {
+    height: 150px;
+    overflow: hidden;
+}
+
+.related-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.related-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: var(--gradient-secondary);
+    color: var(--white-color);
+    font-size: 2rem;
+}
+
+.related-content {
+    padding: 1.5rem;
+}
+
+.related-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.related-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.related-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tech-tag-small {
+    padding: 0.25rem 0.5rem;
+    background: var(--light-color);
+    color: var(--text-secondary);
+    border-radius: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.related-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.related-link:hover {
+    color: var(--primary-dark);
+    transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+    .project-title {
+        font-size: 2.5rem;
+    }
+    
+    .project-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .project-image-section {
+        position: static;
+    }
+    
+    .project-meta {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .project-actions {
+        flex-direction: column;
+    }
+    
+    .related-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature-item {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-hero {
+        padding: 6rem 0 3rem;
+    }
+    
+    .project-details {
+        padding: 3rem 0;
+    }
+    
+    .info-section {
+        margin-bottom: 2rem;
+    }
+    
+    .tech-stack {
+        gap: 0.5rem;
+    }
+    
+    .tech-tag {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Smooth scroll for internal links
+document.addEventListener('DOMContentLoaded', function() {
+    // Add smooth scrolling animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    // Observe elements for animation
+    const animatedElements = document.querySelectorAll('.info-section, .feature-item, .challenge-item, .related-card');
+    
+    animatedElements.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        observer.observe(el);
+    });
+    
+    // Sticky navigation for project sections
+    const sections = document.querySelectorAll('.info-section');
+    const navItems = [];
+    
+    // Create floating navigation if sections exist
+    if (sections.length > 2) {
+        const floatingNav = document.createElement('div');
+        floatingNav.className = 'floating-nav';
+        floatingNav.innerHTML = `
+            <div class="nav-item active" data-section="0">Overview</div>
+            <div class="nav-item" data-section="1">Technologies</div>
+            <div class="nav-item" data-section="2">Features</div>
+            <div class="nav-item" data-section="3">Challenges</div>
+        `;
+        
+        document.body.appendChild(floatingNav);
+        
+        // Add styles for floating nav
+        const style = document.createElement('style');
+        style.textContent = `
+            .floating-nav {
+                position: fixed;
+                right: 2rem;
+                top: 50%;
+                transform: translateY(-50%);
+                background: var(--white-color);
+                border-radius: 2rem;
+                box-shadow: var(--shadow-medium);
+                overflow: hidden;
+                z-index: 100;
+                display: none;
+            }
+            
+            .nav-item {
+                padding: 0.75rem 1rem;
+                cursor: pointer;
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: var(--text-secondary);
+                transition: var(--transition);
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .nav-item:last-child {
+                border-bottom: none;
+            }
+            
+            .nav-item:hover,
+            .nav-item.active {
+                background: var(--primary-color);
+                color: var(--white-color);
+            }
+            
+            @media (max-width: 768px) {
+                .floating-nav {
+                    display: none !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Show floating nav when scrolling past hero
+        window.addEventListener('scroll', () => {
+            const heroHeight = document.querySelector('.project-hero').offsetHeight;
+            if (window.scrollY > heroHeight) {
+                floatingNav.style.display = 'block';
+            } else {
+                floatingNav.style.display = 'none';
+            }
+        });
+        
+        // Handle nav clicks
+        floatingNav.addEventListener('click', (e) => {
+            if (e.target.classList.contains('nav-item')) {
+                const sectionIndex = parseInt(e.target.getAttribute('data-section'));
+                sections[sectionIndex].scrollIntoView({ behavior: 'smooth' });
+                
+                // Update active state
+                floatingNav.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                e.target.classList.add('active');
+            }
+        });
+    }
+});
+
+// Image lazy loading
+function lazyLoadImages() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// Initialize lazy loading if needed
+document.addEventListener('DOMContentLoaded', lazyLoadImages);
+
+// Share functionality
+function addShareButtons() {
+    const shareContainer = document.createElement('div');
+    shareContainer.className = 'share-buttons';
+    shareContainer.innerHTML = `
+        <h4>Share this project:</h4>
+        <div class="share-links">
+            <a href="#" onclick="shareOn('twitter')" class="share-btn twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" onclick="shareOn('linkedin')" class="share-btn linkedin">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="#" onclick="shareOn('facebook')" class="share-btn facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" onclick="copyLink()" class="share-btn copy">
+                <i class="fas fa-link"></i>
+            </a>
+        </div>
+    `;
+    
+    const projectInfo = document.querySelector('.project-info');
+    if (projectInfo) {
+        projectInfo.appendChild(shareContainer);
+    }
+}
+
+function shareOn(platform) {
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(document.title);
+    
+    let shareUrl;
+    switch (platform) {
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+            break;
+        case 'linkedin':
+            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+            break;
+        case 'facebook':
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+            break;
+    }
+    
+    if (shareUrl) {
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+    }
+}
+
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Link copied to clipboard!');
+    });
+}
+
+// Initialize share buttons
+document.addEventListener('DOMContentLoaded', addShareButtons);
+</script>
+{% endblock %}

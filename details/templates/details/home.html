@@ -1,0 +1,354 @@
+{% extends "details/base.html" %}
+{% load custom_filters %}
+{% load static %}
+
+
+
+{% block title %}Parshwa Shah - Cybersecurity Analyst & Web Developer{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="hero">
+    <div class="hero-background">
+        <div class="hero-particles"></div>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="greeting">Hi, I'm</span>
+                    <span class="name">Parshwa Shah</span>
+                </h1>
+                <h2 class="hero-subtitle">
+                    <span class="typed-text"></span>
+                    <span class="cursor">&nbsp;</span>
+                </h2>
+                <p class="hero-description">
+                    A passionate Cybersecurity Analyst and Web Developer with expertise in building secure, 
+                    innovative solutions. Specializing in Django development, web security, and IT consulting.
+                </p>
+                <div class="hero-buttons">
+                    <a href="{% url 'projects' %}" class="btn btn-primary">
+                        <i class="fas fa-code"></i>
+                        View My Projects
+                    </a>
+                    <a href="{% url 'contact' %}" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i>
+                        Get In Touch
+                    </a>
+                </div>
+                <div class="hero-social">
+                    <a href="https://www.linkedin.com/in/parshwa-shah68a48b25b" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:parshwa.shah@example.com">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-container">
+                    {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" alt="Parshwa Shah" class="profile-img">
+                    {% else %}
+                        <img src="{% static 'details/img/profile-placeholder.jpg' %}" alt="Parshwa Shah" class="profile-img">
+                    {% endif %}
+                    <div class="image-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-preview" id="about-preview">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">Get to know more about my background and expertise</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p class="intro-text">
+                    I'm a dedicated IT professional pursuing an Integrated MSc in Information Technology 
+                    at GLS University, Ahmedabad. With hands-on experience in cybersecurity analysis, 
+                    web development, and innovative IT solutions.
+                </p>
+                <div class="highlights">
+                    <div class="highlight-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Cybersecurity Expert</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-code"></i>
+                        <span>Full-Stack Developer</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Hackathon Participant</span>
+                    </div>
+                </div>
+                <a href="{% url 'about' %}" class="btn btn-outline">Learn More About Me</a>
+            </div>
+            <div class="about-stats">
+                <div class="stat-item">
+                    <div class="stat-number">{{ all_projects.count|default:5 }}+</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{ skills_by_category|length|default:6 }}+</div>
+                    <div class="stat-label">Skill Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section class="featured-projects" id="featured-projects">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">Explore some of my recent work and achievements</p>
+        </div>
+        <div class="projects-grid">
+            {% for project in featured_projects %}
+            <div class="project-card">
+                <div class="project-image">
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    {% else %}
+                        <div class="project-placeholder">
+                            <i class="fas fa-code"></i>
+                        </div>
+                    {% endif %}
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            {% if project.project_url %}
+                                <a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            {% endif %}
+                            {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="project-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <p class="project-description">{{ project.description|truncatewords:20 }}</p>
+                    <div class="project-tech">
+                        {% for tech in project.technologies|split:"," %}
+    <span class="tech-tag">{{ tech|trim }}</span>
+{% endfor %}
+
+                    </div>
+                    <a href="{% url 'project_detail' project.id %}" class="project-btn">View Details</a>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default Projects when no data -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-placeholder">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">E-commerce Website</h3>
+                    <p class="project-description">Satvam Naturals - A responsive e-commerce platform for natural products with secure payment integration.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-placeholder">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">GPT Shield</h3>
+                    <p class="project-description">AI-powered grammar correction tool with user authentication and plagiarism detection features.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">LanguageTool API</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-placeholder">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Cybersecurity Projects</h3>
+                    <p class="project-description">Various freelancing projects involving web security analysis and phishing attack identification.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Cybersecurity</span>
+                        <span class="tech-tag">Web Security</span>
+                        <span class="tech-tag">Analysis</span>
+                        <span class="tech-tag">Linux</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-footer">
+            <a href="{% url 'projects' %}" class="btn btn-primary">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Preview Section -->
+<section class="skills-preview" id="skills-preview">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Technical Skills</h2>
+            <p class="section-subtitle">Technologies and tools I work with</p>
+        </div>
+        <div class="skills-container">
+            <div class="skills-category">
+                <h3 class="category-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Cybersecurity
+                </h3>
+                <div class="skills-list">
+                    <span class="skill-item">Web Security</span>
+                    <span class="skill-item">Vulnerability Analysis</span>
+                    <span class="skill-item">Phishing Detection</span>
+                    <span class="skill-item">Network Security</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <h3 class="category-title">
+                    <i class="fas fa-code"></i>
+                    Programming
+                </h3>
+                <div class="skills-list">
+                    <span class="skill-item">Python</span>
+                    <span class="skill-item">JavaScript</span>
+                    <span class="skill-item">C++</span>
+                    <span class="skill-item">Java</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <h3 class="category-title">
+                    <i class="fas fa-globe"></i>
+                    Web Development
+                </h3>
+                <div class="skills-list">
+                    <span class="skill-item">Django</span>
+                    <span class="skill-item">HTML5</span>
+                    <span class="skill-item">CSS3</span>
+                    <span class="skill-item">Tailwind CSS</span>
+                </div>
+            </div>
+        </div>
+        <div class="section-footer">
+            <a href="{% url 'skills' %}" class="btn btn-outline">View All Skills</a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to Work Together?</h2>
+            <p class="cta-description">
+                Let's discuss your next project or how I can help solve your cybersecurity and development challenges.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    Start a Project
+                </a>
+                {% if profile.resume_file %}
+                    <a href="{{ profile.resume_file.url }}" target="_blank" class="btn btn-secondary">
+                        <i class="fas fa-download"></i>
+                        Download Resume
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Typed text animation
+    const typedTextSpan = document.querySelector('.typed-text');
+    const cursorSpan = document.querySelector('.cursor');
+
+    const textArray = ['Cybersecurity Analyst', 'Web Developer', 'IT Consultant', 'Freelancer'];
+    const typingDelay = 100;
+    const erasingDelay = 50;
+    const newTextDelay = 2000;
+    let textArrayIndex = 0;
+    let charIndex = 0;
+
+    function type() {
+        if (charIndex < textArray[textArrayIndex].length) {
+            if (!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+        } else {
+            cursorSpan.classList.remove("typing");
+            setTimeout(erase, newTextDelay);
+        }
+    }
+
+    function erase() {
+        if (charIndex > 0) {
+            if (!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(erase, erasingDelay);
+        } else {
+            cursorSpan.classList.remove("typing");
+            textArrayIndex++;
+            if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+            setTimeout(type, typingDelay + 1100);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        if (textArray.length) setTimeout(type, newTextDelay + 250);
+    });
+
+    // Smooth scrolling for hero button
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}

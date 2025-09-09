@@ -1,0 +1,869 @@
+{% extends 'details/base.html' %}
+{% load static %}
+
+{% block title %}Skills - Parshwa Shah{% endblock %}
+
+{% block content %}
+<!-- Skills Hero Section -->
+<section class="skills-hero">
+    <div class="container">
+        <div class="skills-hero-content">
+            <h1 class="page-title">Technical Skills</h1>
+            <p class="page-subtitle">Explore my expertise in cybersecurity, web development, and modern technologies</p>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Overview Section -->
+<section class="skills-overview">
+    <div class="container">
+        <div class="overview-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">{{ skills_by_category|length|default:6 }}+</h3>
+                    <p class="stat-label">Skill Categories</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">10+</h3>
+                    <p class="stat-label">Technologies</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">2+</h3>
+                    <p class="stat-label">Years Experience</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">5+</h3>
+                    <p class="stat-label">Projects Completed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Categories Section -->
+<section class="skills-categories">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Skill Categories</h2>
+            <p class="section-subtitle">Detailed breakdown of my technical expertise</p>
+        </div>
+        
+        <div class="skills-grid">
+            {% if skills_by_category %}
+                {% for category, skills in skills_by_category.items %}
+                <div class="skill-category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            {% if 'cybersecurity' in category|lower %}
+                                <i class="fas fa-shield-alt"></i>
+                            {% elif 'programming' in category|lower %}
+                                <i class="fas fa-code"></i>
+                            {% elif 'web' in category|lower %}
+                                <i class="fas fa-globe"></i>
+                            {% elif 'tools' in category|lower %}
+                                <i class="fas fa-tools"></i>
+                            {% elif 'technical' in category|lower %}
+                                <i class="fas fa-cogs"></i>
+                            {% else %}
+                                <i class="fas fa-star"></i>
+                            {% endif %}
+                        </div>
+                        <h3 class="category-title">{{ category }}</h3>
+                    </div>
+                    
+                    <div class="skills-list">
+                        {% for skill in skills %}
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">{{ skill.name }}</span>
+                                <span class="skill-percentage">{{ skill.proficiency }}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="{{ skill.proficiency }}" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default skills when no data -->
+                <div class="skill-category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="category-title">Cybersecurity</h3>
+                    </div>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Web Security</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="85" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Vulnerability Analysis</span>
+                                <span class="skill-percentage">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="80" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Phishing Detection</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="90" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Network Security</span>
+                                <span class="skill-percentage">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="75" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="category-title">Programming Languages</h3>
+                    </div>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Python</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="90" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">JavaScript</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="85" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">C++</span>
+                                <span class="skill-percentage">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="75" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Java</span>
+                                <span class="skill-percentage">70%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="70" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="category-title">Web Development</h3>
+                    </div>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Django</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="90" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">HTML5</span>
+                                <span class="skill-percentage">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="95" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">CSS3</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="90" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Tailwind CSS</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="85" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category-card">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="category-title">Database & Tools</h3>
+                    </div>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">MySQL</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="85" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Linux</span>
+                                <span class="skill-percentage">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="80" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Git</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="85" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Networking</span>
+                                <span class="skill-percentage">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-percentage="75" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Skills Radar Chart Section -->
+<section class="skills-radar">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Skills Visualization</h2>
+            <p class="section-subtitle">Visual representation of my technical competencies</p>
+        </div>
+        
+        <div class="radar-container">
+            <div class="radar-chart" id="skillsRadar">
+                <canvas id="radarCanvas" width="400" height="400"></canvas>
+            </div>
+            <div class="radar-legend">
+                <h3>Key Competencies</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #2563eb;"></div>
+                        <span>Web Development</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #dc2626;"></div>
+                        <span>Cybersecurity</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #16a34a;"></div>
+                        <span>Programming</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ca8a04;"></div>
+                        <span>Database Management</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #7c3aed;"></div>
+                        <span>System Administration</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Certifications & Learning Section -->
+<section class="certifications-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Learning & Development</h2>
+            <p class="section-subtitle">Continuous learning and skill enhancement</p>
+        </div>
+        
+        <div class="learning-grid">
+            <div class="learning-card">
+                <div class="learning-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="learning-title">Formal Education</h3>
+                <p class="learning-description">
+                    Currently pursuing Integrated MSc in Information Technology at GLS University, 
+                    focusing on cybersecurity and web development.
+                </p>
+            </div>
+            
+            <div class="learning-card">
+                <div class="learning-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3 class="learning-title">Hackathons</h3>
+                <p class="learning-description">
+                    Participated in DA-IICT Hackathon 2025, applying cybersecurity and development 
+                    skills to solve real-world challenges.
+                </p>
+            </div>
+            
+            <div class="learning-card">
+                <div class="learning-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3 class="learning-title">Practical Projects</h3>
+                <p class="learning-description">
+                    Hands-on experience through freelancing projects, e-commerce development, 
+                    and cybersecurity analysis work.
+                </p>
+            </div>
+            
+            <div class="learning-card">
+                <div class="learning-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3 class="learning-title">Self-Learning</h3>
+                <p class="learning-description">
+                    Continuously updating skills through online courses, documentation, 
+                    and staying current with technology trends.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Let's Build Something Amazing</h2>
+            <p class="cta-description">
+                Ready to leverage my skills for your next project? Let's discuss how I can help bring your ideas to life.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i>
+                    Get In Touch
+                </a>
+                <a href="{% url 'projects' %}" class="btn btn-secondary">
+                    <i class="fas fa-code"></i>
+                    View My Projects
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.skills-hero {
+    padding: 8rem 0 4rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white-color);
+    text-align: center;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.skills-overview {
+    padding: 3rem 0;
+    background: var(--light-color);
+}
+
+.overview-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card {
+    background: var(--white-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-light);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-primary);
+    color: var(--white-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.skills-categories {
+    padding: 5rem 0;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.skill-category-card {
+    background: var(--white-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition);
+}
+
+.skill-category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.category-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    color: var(--white-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.skill-item {
+    margin-bottom: 1.5rem;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.skill-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.skill-percentage {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.skill-bar {
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 4px;
+    transition: width 1.5s ease-in-out;
+}
+
+.skills-radar {
+    padding: 5rem 0;
+    background: var(--light-color);
+}
+
+.radar-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.radar-chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radar-legend h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.certifications-section {
+    padding: 5rem 0;
+}
+
+.learning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.learning-card {
+    background: var(--white-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-light);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.learning-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.learning-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-secondary);
+    color: var(--white-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1.5rem;
+}
+
+.learning-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.learning-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2.5rem;
+    }
+    
+    .overview-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .radar-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .category-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .skill-category-card {
+        padding: 1.5rem;
+    }
+    
+    .learning-card {
+        padding: 1.5rem;
+    }
+    
+    .radar-chart canvas {
+        width: 300px !important;
+        height: 300px !important;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Skill bar animations
+document.addEventListener('DOMContentLoaded', function() {
+    const skillBars = document.querySelectorAll('.skill-progress');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const percentage = bar.getAttribute('data-percentage');
+                
+                setTimeout(() => {
+                    bar.style.width = percentage + '%';
+                }, 200);
+                
+                observer.unobserve(bar);
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+    
+    skillBars.forEach(bar => {
+        observer.observe(bar);
+    });
+});
+
+// Simple radar chart using Canvas
+function drawRadarChart() {
+    const canvas = document.getElementById('radarCanvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 150;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Skills data
+    const skills = [
+        { name: 'Web Development', value: 90, color: '#2563eb' },
+        { name: 'Cybersecurity', value: 85, color: '#dc2626' },
+        { name: 'Programming', value: 88, color: '#16a34a' },
+        { name: 'Database', value: 85, color: '#ca8a04' },
+        { name: 'System Admin', value: 80, color: '#7c3aed' }
+    ];
+    
+    const angleStep = (Math.PI * 2) / skills.length;
+    
+    // Draw grid
+    ctx.strokeStyle = '#e5e7eb';
+    ctx.lineWidth = 1;
+    
+    for (let i = 1; i <= 5; i++) {
+        ctx.beginPath();
+        const gridRadius = (radius / 5) * i;
+        ctx.arc(centerX, centerY, gridRadius, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+    
+    // Draw axes
+    for (let i = 0; i < skills.length; i++) {
+        const angle = i * angleStep - Math.PI / 2;
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius;
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        
+        // Draw labels
+        ctx.fillStyle = '#374151';
+        ctx.font = '12px Inter';
+        ctx.textAlign = 'center';
+        const labelX = centerX + Math.cos(angle) * (radius + 20);
+        const labelY = centerY + Math.sin(angle) * (radius + 20);
+        ctx.fillText(skills[i].name, labelX, labelY);
+    }
+    
+    // Draw data polygon
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(37, 99, 235, 0.2)';
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 2;
+    
+    for (let i = 0; i < skills.length; i++) {
+        const angle = i * angleStep - Math.PI / 2;
+        const value = (skills[i].value / 100) * radius;
+        const x = centerX + Math.cos(angle) * value;
+        const y = centerY + Math.sin(angle) * value;
+        
+        if (i === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+        
+        // Draw data points
+        ctx.fillStyle = skills[i].color;
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+}
+
+// Initialize radar chart when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(drawRadarChart, 1000);
+});
+
+// Counter animation for stats
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.textContent);
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current) + (counter.textContent.includes('+') ? '+' : '');
+                }, 16);
+                
+                observer.unobserve(counter);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    counters.forEach(counter => observer.observe(counter));
+}
+
+// Initialize counter animations
+document.addEventListener('DOMContentLoaded', animateCounters);
+</script>
+{% endblock %}

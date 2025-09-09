@@ -1,0 +1,714 @@
+{% extends "details/base.html" %}
+{% load custom_filters %}
+{% load static %}
+    
+{% block title %}Projects - Parshwa Shah{% endblock %}
+
+{% block content %}
+<!-- Projects Hero Section -->
+<section class="projects-hero">
+    <div class="container">
+        <div class="projects-hero-content">
+            <h1 class="page-title">My Projects</h1>
+            <p class="page-subtitle">Explore my portfolio of cybersecurity, web development, and innovative technology projects</p>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+{% if featured_projects %}
+<section class="featured-projects-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">My most impactful and innovative work</p>
+        </div>
+        
+        <div class="featured-grid">
+            {% for project in featured_projects %}
+            <div class="featured-project-card">
+                <div class="project-image">
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    {% else %}
+                        <div class="project-placeholder">
+                            <i class="fas fa-code"></i>
+                        </div>
+                    {% endif %}
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            {% if project.project_url %}
+                                <a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    <span>Live Demo</span>
+                                </a>
+                            {% endif %}
+                            {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="project-link">
+                                    <i class="fab fa-github"></i>
+                                    <span>Source Code</span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">{{ project.title }}</h3>
+                        <span class="project-status status-{{ project.status }}">{{ project.get_status_display }}</span>
+                    </div>
+                    <p class="project-description">{{ project.description }}</p>
+                    <div class="project-tech">
+                        {% for tech in project.technologies|split:"," %}
+                            <span class="tech-tag">{{ tech|trim }}</span>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'project_detail' project.id %}" class="project-btn">
+                        <i class="fas fa-arrow-right"></i>
+                        View Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- All Projects Section -->
+<section class="all-projects-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">All Projects</h2>
+            <p class="section-subtitle">Complete portfolio of my work</p>
+        </div>
+        
+        <!-- Project Filters -->
+        <div class="project-filters">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="web-dev">Web Development</button>
+            <button class="filter-btn" data-filter="cybersecurity">Cybersecurity</button>
+            <button class="filter-btn" data-filter="ai">AI/ML</button>
+            <button class="filter-btn" data-filter="ecommerce">E-commerce</button>
+        </div>
+        
+        <div class="projects-grid">
+            {% if all_projects %}
+                {% for project in all_projects %}
+                <div class="project-card" data-category="web-dev">
+                    <div class="project-image">
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                        {% else %}
+                            <div class="project-placeholder">
+                                {% if 'ecommerce' in project.title|lower or 'shop' in project.title|lower %}
+                                    <i class="fas fa-shopping-cart"></i>
+                                {% elif 'security' in project.title|lower or 'shield' in project.title|lower %}
+                                    <i class="fas fa-shield-alt"></i>
+                                {% elif 'ai' in project.title|lower or 'gpt' in project.title|lower %}
+                                    <i class="fas fa-brain"></i>
+                                {% else %}
+                                    <i class="fas fa-code"></i>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                {% if project.project_url %}
+                                    <a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer" class="project-link">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                {% endif %}
+                                {% if project.github_url %}
+                                    <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="project-link">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">{{ project.title }}</h3>
+                            <span class="project-status status-{{ project.status }}">{{ project.get_status_display }}</span>
+                        </div>
+                        <p class="project-description">{{ project.description|truncatewords:15 }}</p>
+                        <div class="project-tech">
+                            {% for tech in project.technologies|split:"," %}
+                                <span class="tech-tag">{{ tech|trim }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="project-footer">
+                            <span class="project-date">{{ project.start_date|date:"M Y" }}</span>
+                            <a href="{% url 'project_detail' project.id %}" class="project-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default projects when no data -->
+                <div class="project-card" data-category="ecommerce">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Satvam Naturals E-commerce</h3>
+                            <span class="project-status status-completed">Completed</span>
+                        </div>
+                        <p class="project-description">A comprehensive e-commerce platform for natural products with secure payment integration and inventory management.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Tailwind CSS</span>
+                        </div>
+                        <div class="project-footer">
+                            <span class="project-date">2024</span>
+                            <a href="#" class="project-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card" data-category="ai">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">GPT Shield - Grammar Defense</h3>
+                            <span class="project-status status-completed">Completed</span>
+                        </div>
+                        <p class="project-description">AI-powered grammar correction tool with user authentication, history tracking, and plagiarism detection capabilities.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">LanguageTool API</span>
+                            <span class="tech-tag">Python</span>
+                        </div>
+                        <div class="project-footer">
+                            <span class="project-date">2024</span>
+                            <a href="#" class="project-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card" data-category="cybersecurity">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Web Security Analysis Tool</h3>
+                            <span class="project-status status-ongoing">Ongoing</span>
+                        </div>
+                        <p class="project-description">Comprehensive web security analysis and vulnerability assessment tool for identifying potential threats.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Web Security</span>
+                            <span class="tech-tag">Vulnerability Analysis</span>
+                            <span class="tech-tag">Linux</span>
+                        </div>
+                        <div class="project-footer">
+                            <span class="project-date">2024</span>
+                            <a href="#" class="project-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card" data-category="web-dev">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Portfolio Website</h3>
+                            <span class="project-status status-completed">Completed</span>
+                        </div>
+                        <p class="project-description">Professional portfolio website showcasing skills, projects, and experience with modern design and animations.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="project-footer">
+                            <span class="project-date">2024</span>
+                            <a href="#" class="project-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card" data-category="cybersecurity">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Phishing Detection System</h3>
+                            <span class="project-status status-completed">Completed</span>
+                        </div>
+                        <p class="project-description">Advanced system for detecting and analyzing phishing attacks with machine learning algorithms.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Machine Learning</span>
+                            <span class="tech-tag">Cybersecurity</span>
+                            <span class="tech-tag">Data Analysis</span>
+                        </div>
+                        <div class="project-footer">
+                            <span class="project-date">2023</span>
+                            <a href="#" class="project-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card" data-category="web-dev">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Hackathon Project - DA-IICT</h3>
+                            <span class="project-status status-completed">Completed</span>
+                        </div>
+                        <p class="project-description">Innovative IT solution developed during national-level hackathon focusing on cybersecurity and development challenges.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Cybersecurity</span>
+                            <span class="tech-tag">Innovation</span>
+                        </div>
+                        <div class="project-footer">
+                            <span class="project-date">2025</span>
+                            <a href="#" class="project-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Like What You See?</h2>
+            <p class="cta-description">
+                Let's discuss how I can help bring your next project to life with my expertise in cybersecurity and web development.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i>
+                    Start a Project
+                </a>
+                <a href="{% url 'about' %}" class="btn btn-secondary">
+                    <i class="fas fa-user"></i>
+                    Learn More About Me
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.projects-hero {
+    padding: 8rem 0 4rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white-color);
+    text-align: center;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.featured-projects-section {
+    padding: 5rem 0;
+    background: var(--light-color);
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
+}
+
+.featured-project-card {
+    background: var(--white-color);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+    transition: var(--transition);
+}
+
+.featured-project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.all-projects-section {
+    padding: 5rem 0;
+}
+
+.project-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--light-color);
+    color: var(--text-secondary);
+    border: none;
+    border-radius: 2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary-color);
+    color: var(--white-color);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: var(--white-color);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition);
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.project-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.project-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: var(--gradient-primary);
+    color: var(--white-color);
+    font-size: 3rem;
+}
+
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.1);
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.project-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--white-color);
+    color: var(--primary-color);
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.project-link:hover {
+    background: var(--primary-color);
+    color: var(--white-color);
+    transform: scale(1.05);
+}
+
+.project-content {
+    padding: 1.5rem;
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.project-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    flex: 1;
+}
+
+.project-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-completed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-ongoing {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-planned {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.project-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tech-tag {
+    padding: 0.25rem 0.75rem;
+    background: var(--light-color);
+    color: var(--primary-color);
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.project-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-date {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.project-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.project-btn:hover {
+    color: var(--primary-dark);
+    transform: translateX(5px);
+}
+
+/* Filter animations */
+.project-card.hide {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+.project-card.show {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2.5rem;
+    }
+    
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-filters {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .project-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .project-links {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+    
+    .project-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .project-link span {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-content {
+        padding: 1rem;
+    }
+    
+    .project-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Project filtering
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter projects
+            projectCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                
+                if (filter === 'all' || category === filter) {
+                    card.classList.remove('hide');
+                    card.classList.add('show');
+                } else {
+                    card.classList.remove('show');
+                    card.classList.add('hide');
+                }
+            });
+        });
+    });
+    
+    // Initialize all cards as shown
+    projectCards.forEach(card => {
+        card.classList.add('show');
+    });
+});
+
+// Smooth animations for project cards
+function initProjectAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    projectCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+}
+
+// Initialize animations when DOM is loaded
+document.addEventListener('DOMContentLoaded', initProjectAnimations);
+</script>
+{% endblock %}

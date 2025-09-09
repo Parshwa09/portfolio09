@@ -1,0 +1,638 @@
+
+{% extends 'details/base.html' %}
+{% load static %}
+
+{% block title %}About - Parshwa Shah{% endblock %}
+
+{% block content %}
+<!-- About Hero Section -->
+<section class="about-hero">
+    <div class="container">
+        <div class="about-hero-content">
+            <div class="about-text">
+                <h1 class="page-title">About Me</h1>
+                <p class="page-subtitle">Get to know more about my journey, skills, and passion for technology</p>
+                
+                {% if profile %}
+                <div class="about-intro">
+                    <p>{{ profile.bio|default:"I'm a passionate and quick-learning IT enthusiast with hands-on experience in cybersecurity, web development, freelancing projects, and hackathons. Skilled in building secure web solutions, analyzing phishing attacks, and contributing to innovative IT projects." }}</p>
+                </div>
+                {% endif %}
+                
+                <div class="about-highlights">
+                    <div class="highlight-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Education</h3>
+                        <p>Pursuing Integrated MSc in Information Technology</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Expertise</h3>
+                        <p>Cybersecurity Analysis & Web Development</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Experience</h3>
+                        <p>Hackathons & Freelancing Projects</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-image">
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="Parshwa Shah" class="profile-image">
+                {% else %}
+                    <img src="{% static 'details/img/profile-placeholder.jpg' %}" alt="Parshwa Shah" class="profile-image">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Technical Skills</h2>
+            <p class="section-subtitle">Technologies and tools I work with</p>
+        </div>
+        
+        <div class="skills-grid">
+            {% if skills_by_category %}
+                {% for category, skills in skills_by_category.items %}
+                <div class="skill-category">
+                    <h3 class="category-title">{{ category }}</h3>
+                    <div class="skills-list">
+                        {% for skill in skills %}
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">{{ skill.name }}</span>
+                                <span class="skill-percentage">{{ skill.proficiency }}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: {{ skill.proficiency }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default skills when no data -->
+                <div class="skill-category">
+                    <h3 class="category-title">Cybersecurity</h3>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Web Security</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Vulnerability Analysis</span>
+                                <span class="skill-percentage">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="category-title">Programming Languages</h3>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Python</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">JavaScript</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">C++</span>
+                                <span class="skill-percentage">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="category-title">Web Development</h3>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Django</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">HTML5/CSS3</span>
+                                <span class="skill-percentage">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">MySQL</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section class="experience-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Experience & Projects</h2>
+            <p class="section-subtitle">My professional journey and key projects</p>
+        </div>
+        
+        <div class="timeline">
+            {% if experience %}
+                {% for exp in experience %}
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">{{ exp.title }}</h3>
+                        <h4 class="timeline-company">{{ exp.company }}</h4>
+                        <p class="timeline-period">
+                            {{ exp.start_date|date:"M Y" }} - 
+                            {% if exp.current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}
+                        </p>
+                        <p class="timeline-description">{{ exp.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default experience -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">E-commerce Website Development</h3>
+                        <h4 class="timeline-company">Satvam Naturals</h4>
+                        <p class="timeline-period">2024</p>
+                        <p class="timeline-description">
+                            Designed and developed a responsive e-commerce website for natural products. 
+                            Implemented product management, cart, checkout, and secure payment features using Django, MySQL, HTML, CSS, JavaScript, and Tailwind CSS.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">AI Grammar Correction Tool</h3>
+                        <h4 class="timeline-company">GPT Shield Project</h4>
+                        <p class="timeline-period">2024</p>
+                        <p class="timeline-description">
+                            Built an AI-powered grammar correction tool using Django, MySQL, and LanguageTool API. 
+                            Developed user authentication, history tracking, and plagiarism detection modules with complete UML diagrams and database schema.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Hackathon Participation</h3>
+                        <h4 class="timeline-company">DA-IICT Hackathon 2025</h4>
+                        <p class="timeline-period">2025</p>
+                        <p class="timeline-description">
+                            Participated in a national-level hackathon, collaborating on innovative IT solutions. 
+                            Applied cybersecurity and development skills to solve real-world challenges.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Freelancing Projects</h3>
+                        <h4 class="timeline-company">Cybersecurity & Web Development</h4>
+                        <p class="timeline-period">2023 - Present</p>
+                        <p class="timeline-description">
+                            Worked on various freelancing projects involving website security analysis, phishing attack identification, and web development solutions.
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Education Section -->
+<section class="education-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Education</h2>
+            <p class="section-subtitle">My academic background</p>
+        </div>
+        
+        <div class="education-grid">
+            {% if education %}
+                {% for edu in education %}
+                <div class="education-card">
+                    <div class="education-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3 class="education-degree">{{ edu.degree }}</h3>
+                        <h4 class="education-institution">{{ edu.institution }}</h4>
+                        <p class="education-location">{{ edu.location }}</p>
+                        <p class="education-period">{{ edu.start_year }} - {% if edu.end_year %}{{ edu.end_year }}{% else %}Present{% endif %}</p>
+                        {% if edu.grade %}
+                            <p class="education-grade">Grade: {{ edu.grade }}</p>
+                        {% endif %}
+                        {% if edu.description %}
+                            <p class="education-description">{{ edu.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Default education -->
+                <div class="education-card">
+                    <div class="education-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3 class="education-degree">Bachelor Of Science In Information Technology</h3>
+                        <h4 class="education-institution">GLS University</h4>
+                        <p class="education-location">Ahmedabad, Gujarat</p>
+                        <p class="education-period">2022 - 2025 (Pursuing)</p>
+                        <p class="education-description">
+                            Integrated MSc (IT) program focusing on Information Technology, Cybersecurity, 
+                            Web Development, and innovative IT solutions.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="education-card">
+                    <div class="education-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3 class="education-degree">High School</h3>
+                        <h4 class="education-institution">Nirman High School</h4>
+                        <p class="education-location">Panchvati</p>
+                        <p class="education-period">2022</p>
+                        <p class="education-grade">Grade: 65%</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Contact CTA -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Let's Work Together</h2>
+            <p class="cta-description">
+                Ready to start your next project? Let's discuss how I can help bring your ideas to life.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'contact' %}" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i>
+                    Get In Touch
+                </a>
+                <a href="{% url 'projects' %}" class="btn btn-secondary">
+                    <i class="fas fa-code"></i>
+                    View My Work
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.about-hero {
+    padding: 8rem 0 4rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--white-color);
+}
+
+.about-hero-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.about-intro {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    opacity: 0.95;
+}
+
+.about-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.highlight-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.highlight-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+.highlight-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.profile-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-heavy);
+}
+
+.skills-section {
+    padding: 5rem 0;
+    background: var(--light-color);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+}
+
+.skill-category {
+    background: var(--white-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-light);
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+.skill-item {
+    margin-bottom: 2rem;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.skill-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.skill-percentage {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.skill-bar {
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 4px;
+    transition: width 1.5s ease-in-out;
+}
+
+.experience-section {
+    padding: 5rem 0;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--primary-color);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-left: 4rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 3px solid var(--white-color);
+    box-shadow: var(--shadow-medium);
+}
+
+.timeline-content {
+    background: var(--white-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-light);
+}
+
+.timeline-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-company {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-period {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.timeline-description {
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.education-section {
+    padding: 5rem 0;
+    background: var(--light-color);
+}
+
+.education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.education-card {
+    background: var(--white-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-light);
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.education-icon {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    color: var(--white-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.education-degree {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.education-institution {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.education-location,
+.education-period {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.education-grade {
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.education-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .about-hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .about-highlights {
+        grid-template-columns: 1fr;
+    }
+    
+    .timeline::before {
+        left: 15px;
+    }
+    
+    .timeline-item {
+        padding-left: 3rem;
+    }
+    
+    .education-card {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+{% endblock %}
