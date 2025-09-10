@@ -21,8 +21,10 @@ class Profile(models.Model):
         return self.name
 
     class Meta:
+        db_table = "profile"
         verbose_name = "Profile"
         verbose_name_plural = "Profiles"
+
 
 class Skill(models.Model):
     SKILL_CATEGORIES = [
@@ -48,7 +50,9 @@ class Skill(models.Model):
         return f"{self.name} ({self.get_category_display()})"
 
     class Meta:
+        db_table = "skill"
         ordering = ['category', '-proficiency', 'name']
+
 
 class Project(models.Model):
     PROJECT_STATUS = [
@@ -75,7 +79,9 @@ class Project(models.Model):
         return self.title
 
     class Meta:
+        db_table = "project"
         ordering = ['-featured', '-start_date']
+
 
 class Education(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -92,7 +98,9 @@ class Education(models.Model):
         return f"{self.degree} - {self.institution}"
 
     class Meta:
+        db_table = "education"
         ordering = ['-start_year']
+
 
 class Experience(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -109,7 +117,9 @@ class Experience(models.Model):
         return f"{self.title} at {self.company}"
 
     class Meta:
+        db_table = "experience"
         ordering = ['-start_date']
+
 
 class Contact(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -123,4 +133,5 @@ class Contact(models.Model):
         return f"Message from {self.name} - {self.subject}"
 
     class Meta:
+        db_table = "contact"
         ordering = ['-created_at']

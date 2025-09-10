@@ -156,46 +156,8 @@ function initAnimations() {
 }
 
 // Form Handling
-function initFormHandling() {
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
-            
-            // Show loading state
-            submitButton.textContent = 'Sending...';
-            submitButton.disabled = true;
-            
-            // Simulate form submission (replace with actual API call)
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showMessage('Thank you! Your message has been sent successfully.', 'success');
-                    this.reset();
-                } else {
-                    showMessage('Sorry, there was an error sending your message. Please try again.', 'error');
-                }
-            })
-            .catch(error => {
-                showMessage('Sorry, there was an error sending your message. Please try again.', 'error');
-            })
-            .finally(() => {
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-            });
-        });
+
+
         
         // Real-time validation
         const formInputs = contactForm.querySelectorAll('input, textarea');
@@ -258,39 +220,31 @@ function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
-
-// Message display
 function showMessage(message, type = 'info') {
-    const messagesContainer = document.querySelector('.messages-container') || createMessagesContainer();
-    
+    let messagesContainer = document.querySelector('.messages-container');
+    if (!messagesContainer) {
+        messagesContainer = document.createElement('div');
+        messagesContainer.className = 'messages-container';
+        document.body.appendChild(messagesContainer);
+    }
+
     const messageDiv = document.createElement('div');
     messageDiv.className = `alert alert-${type} fade-in`;
     messageDiv.innerHTML = `
         <i class="fas fa-${getIconForType(type)}"></i>
         ${message}
-        <button type="button" class="alert-close" onclick="this.parentElement.style.display='none';">&times;</button>
+        <button type="button" class="alert-close" onclick="this.parentElement.remove();">&times;</button>
     `;
-    
+
     messagesContainer.appendChild(messageDiv);
-    
-    // Auto-remove after 5 seconds
+
+    // Auto-remove after 5s
     setTimeout(() => {
         if (messageDiv.parentNode) {
             messageDiv.style.opacity = '0';
-            setTimeout(() => {
-                if (messageDiv.parentNode) {
-                    messageDiv.parentNode.removeChild(messageDiv);
-                }
-            }, 300);
+            setTimeout(() => messageDiv.remove(), 300);
         }
     }, 5000);
-}
-
-function createMessagesContainer() {
-    const container = document.createElement('div');
-    container.className = 'messages-container';
-    document.body.appendChild(container);
-    return container;
 }
 
 function getIconForType(type) {
@@ -302,6 +256,15 @@ function getIconForType(type) {
     };
     return icons[type] || 'info-circle';
 }
+
+function createMessagesContainer() {
+    const container = document.createElement('div');
+    container.className = 'messages-container';
+    document.body.appendChild(container);
+    return container;
+}
+
+
 
 // Scroll to Top
 function initScrollToTop() {

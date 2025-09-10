@@ -124,6 +124,8 @@ def skills(request):
         context = {'error': f'Error loading skills: {str(e)}'}
         return render(request, 'details/skills.html', context)
 
+from django.http import JsonResponse
+
 def contact(request):
     """Contact page view with form handling"""
     if request.method == 'POST':
@@ -138,7 +140,7 @@ def contact(request):
                     message=form.cleaned_data['message']
                 )
                 contact_message.save()
-                
+
                 # Send email notification (optional - configure in settings)
                 try:
                     send_mail(
@@ -152,16 +154,28 @@ def contact(request):
                     )
                 except:
                     pass  # Email sending is optional
-                
-                messages.success(request, 'Thank you for your message! I will get back to you soon.')
-                return redirect('contact')
+
+                # ✅ Return JSON if it's a fetch/AJAX request
+                if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                    return JsonResponse({"success": True})
+                else:
+                    messages.success(request, 'Thank you for your message! I will get back to you soon.')
+                    return redirect('contact')
+
             except Exception as e:
-                messages.error(request, f'Error sending message: {str(e)}')
+                if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                    return JsonResponse({"success": False, "error": str(e)})
+                else:
+                    messages.error(request, f'Error sending message: {str(e)}')
         else:
-            messages.error(request, 'Please correct the errors below.')
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({"success": False, "errors": form.errors})
+            else:
+                messages.error(request, 'Please correct the errors below.')
     else:
         form = ContactForm()
-    
+
+    # Normal GET: render template
     try:
         profile = Profile.objects.first()
         context = {
@@ -172,6 +186,7 @@ def contact(request):
     except Exception as e:
         context = {'form': form, 'error': f'Error loading contact data: {str(e)}'}
         return render(request, 'details/contact.html', context)
+
 
 def api_skills(request):
     """API endpoint to get skills data as JSON"""

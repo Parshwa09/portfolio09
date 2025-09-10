@@ -38,13 +38,14 @@
                 </div>
             </div>
             
-            <div class="about-image">
-                {% if profile.profile_image %}
-                    <img src="{{ profile.profile_image.url }}" alt="Parshwa Shah" class="profile-image">
-                {% else %}
-                    <img src="{% static 'details/img/profile-placeholder.jpg' %}" alt="Parshwa Shah" class="profile-image">
-                {% endif %}
-            </div>
+            <div class="hero-image">
+    <div class="image-container">
+     <img src="{% static 'details/img/parshwa-new.jpg' %}" alt="Parshwa Shah" class="profile-img" style="width: 300px; height: 300px; object-fit: cover; object-position: top center; border-radius: 50%; border: 6px solid #9a8cd6;">
+
+
+        <div class="image-overlay"></div>
+    </div>
+</div>
         </div>
     </div>
 </section>
@@ -242,7 +243,7 @@
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
                         <h3 class="timeline-title">Freelancing Projects</h3>
-                        <h4 class="timeline-company">Cybersecurity & Web Development</h4>
+                        <h4 class="timeline-company">Web Development</h4>
                         <p class="timeline-period">2023 - Present</p>
                         <p class="timeline-description">
                             Worked on various freelancing projects involving website security analysis, phishing attack identification, and web development solutions.

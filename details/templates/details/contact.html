@@ -33,7 +33,7 @@
                         </div>
                         <div class="contact-details">
                             <h3>Email</h3>
-                            <p>{% if profile.email %}{{ profile.email }}{% else %}parshwa.shah@example.com{% endif %}</p>
+                            <p>{% if profile.email %}{{ profile.email }}{% else %}parshwa0917@gmail.com{% endif %}</p>
                         </div>
                     </div>
                     
@@ -43,7 +43,7 @@
                         </div>
                         <div class="contact-details">
                             <h3>Phone</h3>
-                            <p>{% if profile.phone %}{{ profile.phone }}{% else %}+91 XXXXX XXXXX{% endif %}</p>
+                            <p>{% if profile.phone %}{{ profile.phone }}{% else %}+91 9054521633{% endif %}</p>
                         </div>
                     </div>
                     
@@ -64,7 +64,7 @@
                         <div class="contact-details">
                             <h3>LinkedIn</h3>
                             <p>
-                                <a href="{% if profile.linkedin_url %}{{ profile.linkedin_url }}{% else %}https://www.linkedin.com/in/parshwa-shah68a48b25b{% endif %}" 
+                                <a href="https://www.linkedin.com/in/parshwa-shah-68a48b25b/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
                                    target="_blank" rel="noopener noreferrer">
                                     Connect with me
                                 </a>
@@ -74,7 +74,7 @@
                 </div>
                 
                 <div class="social-links">
-                    <a href="{% if profile.linkedin_url %}{{ profile.linkedin_url }}{% else %}https://www.linkedin.com/in/parshwa-shah68a48b25b{% endif %}" 
+                    <a href="https://www.linkedin.com/in/parshwa-shah-68a48b25b/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
                        target="_blank" rel="noopener noreferrer" class="social-link">
                         <i class="fab fa-linkedin"></i>
                     </a>
@@ -83,17 +83,38 @@
                             <i class="fab fa-github"></i>
                         </a>
                     {% endif %}
-                    <a href="mailto:{% if profile.email %}{{ profile.email }}{% else %}parshwa.shah@example.com{% endif %}" class="social-link">
+                    <a href="mailto:{% if profile.email %}{{ profile.email }}{% else %}parshwa0917@gmail.com{% endif %}" class="social-link">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </div>
             </div>
             
             <!-- Contact Form -->
-            <div class="contact-form-container">
-                <form method="post" class="contact-form" id="contact-form">
-                    {% csrf_token %}
-                    <h2 class="form-title">Send Me a Message</h2>
+           <!-- Contact Form -->
+<div class="contact-form-container">
+
+    <!-- Add this block right here -->
+   {% if messages %}
+<div class="messages-container">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <i class="fas fa-{% if message.tags == 'success' %}check-circle
+                           {% elif message.tags == 'error' %}exclamation-circle
+                           {% elif message.tags == 'warning' %}exclamation-triangle
+                           {% else %}info-circle{% endif %}"></i>
+            {{ message }}
+            <button type="button" class="alert-close" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+    <form method="post" class="contact-form" id="contact-form">
+        {% csrf_token %}
+        <h2 class="form-title">Send Me a Message</h2>
+        <!-- form fields below -->
+
                     
                     <div class="form-group">
                         <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>

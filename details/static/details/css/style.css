@@ -311,34 +311,36 @@ body {
 
 .hero-image {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
 .image-container {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 150px;  /* 👈 Smaller size */
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.profile-img {
+img.profile-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
-    border: 5px solid rgba(255, 255, 255, 0.2);
-    box-shadow: var(--shadow-heavy);
+    display: block;
 }
 
 .image-overlay {
     position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    animation: rotate 20s linear infinite;
+    background: rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
 }
 
 @keyframes rotate {
@@ -715,82 +717,117 @@ section {
 }
 
 /* Messages */
+/* Floating Messages */
 .messages-container {
     position: fixed;
     top: 80px;
     right: 1rem;
     z-index: 1100;
     max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    pointer-events: none; /* clicks pass through except on alerts */
 }
 
 .alert {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
+    padding: 1rem 1.25rem;
     border-radius: 0.5rem;
-    box-shadow: var(--shadow-medium);
-    animation: slideIn 0.3s ease-out;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: slideIn 0.3s ease forwards;
+    pointer-events: auto; /* allow interaction with close button */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Success */
 .alert-success {
-    background: #d1fae5;
+    background-color: #d1fae5;
     color: #065f46;
-    border-left: 4px solid #10b981;
+    border-left: 5px solid #10b981;
 }
 
+/* Error */
 .alert-error {
-    background: #fee2e2;
+    background-color: #fee2e2;
     color: #991b1b;
-    border-left: 4px solid #ef4444;
+    border-left: 5px solid #ef4444;
 }
 
+/* Warning */
 .alert-warning {
-    background: #fef3c7;
+    background-color: #fef3c7;
     color: #92400e;
-    border-left: 4px solid #f59e0b;
+    border-left: 5px solid #f59e0b;
 }
 
+/* Info */
 .alert-info {
-    background: #dbeafe;
+    background-color: #dbeafe;
     color: #1e40af;
-    border-left: 4px solid #3b82f6;
+    border-left: 5px solid #3b82f6;
 }
 
+/* Close button */
 .alert-close {
-    background: none;
+    background: transparent;
     border: none;
     font-size: 1.25rem;
+    color: inherit;
     cursor: pointer;
     margin-left: auto;
     opacity: 0.7;
-    transition: var(--transition);
+    transition: opacity 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
 }
 
 .alert-close:hover {
     opacity: 1;
 }
 
+/* Animations */
 @keyframes slideIn {
-    from {
+    0% {
         transform: translateX(100%);
         opacity: 0;
     }
-    to {
+    60% {
+        transform: translateX(-10%);
+        opacity: 1;
+    }
+    100% {
         transform: translateX(0);
         opacity: 1;
     }
 }
 
 .fade-in {
-    animation: fadeIn 0.5s ease-out;
+    animation: fadeIn 0.5s ease forwards;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
 
 /* Footer */
 .footer {
