@@ -35,6 +35,11 @@ ALLOWED_HOSTS = ["portfolio09-production.up.railway.app"]
 
 # Application definition
 
+import os
+
+PORT = int(os.environ.get("PORT", 8000))  # fallback to 8000 if PORT not set
+
+
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
