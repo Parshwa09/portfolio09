@@ -26,12 +26,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s)0r=3ewt3#wk^jd3p33iow(#dx+ia1p-sof2(1n(#_k4m$kb4'
+SECRET_KEY = '_8y_ouszs*l&bxcw@+!ybx_^##tb=29(s@ak6l%5#(go!=u!in'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [portfolio09-production.up.railway.app]
 
 
 # Application definition
