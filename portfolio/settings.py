@@ -31,7 +31,7 @@ SECRET_KEY = '_8y_ouszs*l&bxcw@+!ybx_^##tb=29(s@ak6l%5#(go!=u!in'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["portfolio09-production.up.railway.app"]
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -88,7 +88,6 @@ DATABASES = {
         'PORT': '51942',
     }
 }
-
 
 
 # Password validation
