@@ -31,7 +31,12 @@ SECRET_KEY = '_8y_ouszs*l&bxcw@+!ybx_^##tb=29(s@ak6l%5#(go!=u!in'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "portfolio09-adwk.onrender.com",
+    "127.0.0.1",
+    "localhost"
+]
+
 
 # Application definition
 
